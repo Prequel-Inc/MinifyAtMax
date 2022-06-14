@@ -17,8 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        scale_nearest.setOnClickListener { minifyTexture(FilterType.NEIGHBOUR) }
-        scale_linear.setOnClickListener { minifyTexture(FilterType.BILINEAR) }
+        gl_nearest_mipmap_nearest.setOnClickListener { minifyTexture(FilterType.GL_NEAREST_MIPMAP_NEAREST) }
+        gl_nearest_mipmap_linear.setOnClickListener { minifyTexture(FilterType.GL_NEAREST_MIPMAP_LINEAR) }
+        gl_linear_mipmap_nearest.setOnClickListener { minifyTexture(FilterType.GL_LINEAR_MIPMAP_NEAREST) }
+        gl_linear_mipmap_linear.setOnClickListener { minifyTexture(FilterType.GL_LINEAR_MIPMAP_LINEAR) }
     }
 
     private fun minifyTexture(filterType: FilterType) {
@@ -39,8 +41,10 @@ class MainActivity : AppCompatActivity() {
                 queueEvent {
                     val bitmap = TextureHelper.readPixels(this@MainActivity)
                     val fileName = when (filterType) {
-                        FilterType.NEIGHBOUR -> "opengl_neighbour.${IMAGE_EXTENSION}"
-                        FilterType.BILINEAR -> "opengl_bilinear.${IMAGE_EXTENSION}"
+                        FilterType.GL_NEAREST_MIPMAP_NEAREST -> "GL_NEAREST_MIPMAP_NEAREST.${IMAGE_EXTENSION}"
+                        FilterType.GL_NEAREST_MIPMAP_LINEAR -> "GL_NEAREST_MIPMAP_LINEAR.${IMAGE_EXTENSION}"
+                        FilterType.GL_LINEAR_MIPMAP_NEAREST-> "GL_LINEAR_MIPMAP_NEAREST.${IMAGE_EXTENSION}"
+                        FilterType.GL_LINEAR_MIPMAP_LINEAR -> "GL_LINEAR_MIPMAP_LINEAR.${IMAGE_EXTENSION}"
                     }
                     writeBitmapToFile(bitmap, fileName)
                     post {
@@ -68,13 +72,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     enum class FilterType {
-        NEIGHBOUR, BILINEAR
+        GL_NEAREST_MIPMAP_NEAREST,
+        GL_NEAREST_MIPMAP_LINEAR,
+        GL_LINEAR_MIPMAP_NEAREST,
+        GL_LINEAR_MIPMAP_LINEAR,
     }
 
     companion object {
-        const val RESOURCE_ID = R.drawable.red_blue_source
-        const val SOURCE_IMAGE_SIZE = 100
-        var filterType = FilterType.NEIGHBOUR
+        const val RESOURCE_ID = R.drawable.blue_reed_5_10
+        const val SOURCE_IMAGE_SIZE = 10
+        var filterType = FilterType.GL_NEAREST_MIPMAP_NEAREST
         private const val DELAY_FOR_DRAWING = 100L
         private const val IMAGE_EXTENSION = "png"
     }

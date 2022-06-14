@@ -74,8 +74,10 @@ class SimpleTextureRenderer(private val context: Context) :
 
     override fun onDrawFrame(gl: GL10?) {
         val param = when(MainActivity.filterType) {
-            MainActivity.FilterType.NEIGHBOUR -> GLES30.GL_NEAREST
-            MainActivity.FilterType.BILINEAR -> GLES30.GL_LINEAR
+            MainActivity.FilterType.GL_NEAREST_MIPMAP_NEAREST -> GLES30.GL_NEAREST_MIPMAP_NEAREST
+            MainActivity.FilterType.GL_NEAREST_MIPMAP_LINEAR -> GLES30.GL_NEAREST_MIPMAP_LINEAR
+            MainActivity.FilterType.GL_LINEAR_MIPMAP_NEAREST -> GLES30.GL_LINEAR_MIPMAP_NEAREST
+            MainActivity.FilterType.GL_LINEAR_MIPMAP_LINEAR -> GLES30.GL_LINEAR_MIPMAP_LINEAR
         }
         GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, param)
 

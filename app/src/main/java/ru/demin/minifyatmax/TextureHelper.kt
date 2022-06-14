@@ -11,7 +11,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.demin.minifyatmax.MainActivity.Companion.SOURCE_IMAGE_SIZE
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.Math.pow
 import java.nio.ByteBuffer
+import kotlin.math.floor
+import kotlin.math.pow
 
 object TextureHelper {
     fun loadTexture(context: Context, @DrawableRes resource: Int): Int {
@@ -27,7 +30,11 @@ object TextureHelper {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SOURCE_IMAGE_SIZE, SOURCE_IMAGE_SIZE, 0, GL_RGBA, GL_UNSIGNED_BYTE, getByteBufferFromResource(context, resource))
+        generateMipmap(0, context, resource)
+        generateMipmap(1, context, R.drawable.blue_red_5_5)
+        generateMipmap(2, context, R.drawable.green_2)
+        generateMipmap(3, context, R.drawable.black_1)
+
         glBindTexture(GL_TEXTURE_2D, 0)
         return texturesIds[0]
     }
@@ -53,6 +60,21 @@ object TextureHelper {
         bitmap.copyPixelsToBuffer(buffer)
         buffer.flip()
         return buffer
+    }
+
+    private fun generateMipmap(level: Int, context: Context, @DrawableRes resource: Int) {
+        val mipmapSize = floor(SOURCE_IMAGE_SIZE / 2.0.pow(level.toDouble())).toInt()
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            level,
+            GL_RGBA,
+            mipmapSize,
+            mipmapSize,
+            0,
+            GL_RGBA,
+            GL_UNSIGNED_BYTE,
+            getByteBufferFromResource(context, resource)
+        )
     }
 
     private const val BYTES_PER_PIXEL = 4
