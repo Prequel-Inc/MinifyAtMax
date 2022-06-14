@@ -11,21 +11,38 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="64dp"
-            app:layout_constraintBottom_toTopOf="@+id/check_scaling"
+            android:src="@drawable/red_blue_source"
+            app:layout_constraintBottom_toTopOf="@+id/scale_nearest"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/red_blue_source" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-            android:id="@+id/check_scaling"
+            android:id="@+id/scale_nearest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check Scaling!"
+            android:text="Scale nearest"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/scale_linear"
+            app:layout_constraintTop_toBottomOf="@+id/source_image" />
+
+    <Button
+            android:id="@+id/scale_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scale liner"
+            app:layout_constraintLeft_toRightOf="@+id/scale_nearest"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/source_image" />
+
+    <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="@dimen/scale_size"
+            android:layout_height="@dimen/scale_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/scale_linear"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
