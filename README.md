@@ -8,4 +8,4 @@ You can experiment with your own images by loading it in resources and modify co
         const val SOURCE_IMAGE_SIZE = 10
 ```  
 
-More details about pixel calculating are in article.
+More details about pixel calculating are in [article](https://habr.com/ru/company/prequel/blog/672534/).
